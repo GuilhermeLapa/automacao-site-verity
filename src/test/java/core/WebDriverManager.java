@@ -41,15 +41,7 @@ public class WebDriverManager {
 			driver= null;
 		}
 	}
-	/*
-	private static WebDriver iniciarDriver(TiposBrowser nomeBrowser) {
-		if(driver == null) {
-			criarDriver(nomeBrowser);
-		}
-		
-		return driver;
-	}
-	*/
+	
 	public WebDriver getDriver() {
 		return driver;
 	}
@@ -121,8 +113,8 @@ public class WebDriverManager {
 	
 	protected static void clicarElemento(WebElement elemento) {
 		aguardar(3000);
-		aguardarElemetoVisivel(elemento, 3000);
-		aguardarElemetoClicavel(elemento, 3000);
+		//aguardarElemetoVisivel(elemento, 3000);
+		//aguardarElemetoClicavel(elemento, 3000);
 		
 		Actions acao= new Actions(driver);
 		acao.moveToElement(elemento).build().perform();

@@ -14,7 +14,7 @@ public class HomeSteps {
 	}
 	
 	@When("preencho o campo Nome com valor {string}")
-	public static void preenchoOCampoNome(String valor) {
+	public static void preenchoOCampoNomeComValor(String valor) {
 		HomePage.preencherCampoNome(valor);
 	}
 	
@@ -29,17 +29,17 @@ public class HomeSteps {
 	}
 	
 	@And("preencho o campo Email com valor {string}")
-	public static void preenchoOCampoEmail(String valor) {
+	public static void preenchoOCampoEmailComValor(String valor) {
 		HomePage.preencherCampoEmail(valor);
 	}
 	
 	@And("preencho o campo Telefone com valor {string}")
-	public static void preenchoOCampoTelefone(String valor) {
+	public static void preenchoOCampoTelefoneComValor(String valor) {
 		HomePage.preencherCampoTelefone(valor);
 	}
 	
 	@And("preencho o campo Nos conte o seu desafio com valor {string}")
-	public static void preenchoOCampoNosConteOSeuDesafio(String valor) {
+	public static void preenchoOCampoNosConteOSeuDesafioComValor(String valor) {
 		HomePage.preencherCampoNosConteOSeuDesafio(valor);
 	}
 	
@@ -56,6 +56,11 @@ public class HomeSteps {
 	@And("verifico o texto de confirmacao")
 	public static void verificoOTextoDeConfirmacao() {
 		HomePage.verificarOTextoDeConfirmacao();
+	}
+	
+	@And("acesso a newsletter")
+	public static void acessoANewsletter() {
+		HomePage.acessarNewsletter();
 	}
 	
 	@After

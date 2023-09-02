@@ -2,6 +2,9 @@ package page;
 
 import org.junit.Assert;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Action;
+import org.openqa.selenium.interactions.Actions;
+
 import core.TiposBrowser;
 import core.TiposSeletores;
 import core.WebDriverManager;
@@ -16,7 +19,7 @@ public class HomePage extends WebDriverManager {
 	private static final String xpathNewsletterCmpTelefone= "//input[@name='phone']";
 	private static final String xpathNewsletterCmpNosConteOSeuDesafio= "//textarea[@placeholder='Nos conte o seu desafio']";
 	private static final String xpathNewsletterChkAceitoReceberMensagensDaVerity= "//label[@data-testid='checkbox']//input";
-	private static final String xpathNewsletterBtnEnviar= "[data-testid='buttonElement']";
+	private static final String cssNewsletterBtnEnviar= "[data-testid='buttonElement']";
 	private static final String xpathConfirmacaoObrigado= "//span[text()='Obrigado!']";
 	
 	public static WebElement tituloSomosVerity;
@@ -67,19 +70,28 @@ public class HomePage extends WebDriverManager {
 	}
 	
 	public static void clicarBotaoEnviar() {
-		aguardarPresencaElemeto(TiposSeletores.XPATH, xpathNewsletterBtnEnviar, 3000);
-		newsletterBtnEnviar= encontrarElemento(TiposSeletores.XPATH, xpathNewsletterBtnEnviar);
+		aguardarPresencaElemeto(TiposSeletores.CSS, cssNewsletterBtnEnviar, 3000);
+		newsletterBtnEnviar= encontrarElemento(TiposSeletores.CSS, cssNewsletterBtnEnviar);
 		aguardarElemetoClicavel(newsletterBtnEnviar, 3000);
 		clicarElemento(newsletterBtnEnviar);
 	}
 	
 	public static void verificarTituloSomosVerity() {
 		aguardarPresencaElemeto(TiposSeletores.XPATH, xpathTituloSomosVerity, 3000);
-		Assert.assertEquals("Somos Verity_".toUpperCase(), tituloSomosVerity.getText().toString().toUpperCase());
+		tituloSomosVerity=  encontrarElemento(TiposSeletores.XPATH, xpathTituloSomosVerity);
+		
+		if(!tituloSomosVerity.getText().isBlank() || !tituloSomosVerity.getText().isEmpty()) {
+			Assert.assertEquals("Somos Verity_".toUpperCase(), tituloSomosVerity.getText().toString().toUpperCase());
+		}
+		else {
+			tituloSomosVerity= encontrarElemento(TiposSeletores.XPATH, "//div[@id='comp-lhp9lfxc1']/h2/span");
+			Assert.assertTrue(driver.getPageSource().contains("Somos Verity<span style=\"color:#DC4179;\" class=\"wixui-rich-text__text\">_</span></h2>"));
+		}
 	}
 	
 	public static void verificarTituloNossosClientes() {
 		aguardarPresencaElemeto(TiposSeletores.XPATH, xpathTituloNossosClientes, 3000);
+		tituloNossosClientes=  encontrarElemento(TiposSeletores.XPATH, xpathTituloNossosClientes);
 		Assert.assertEquals("Nossos clientes_".toUpperCase(), tituloNossosClientes.getText().toString().toUpperCase());
 	}
 	
@@ -87,5 +99,20 @@ public class HomePage extends WebDriverManager {
 		aguardarPresencaElemeto(TiposSeletores.XPATH, xpathConfirmacaoObrigado, 3000);
 		confirmacaoObrigado= encontrarElemento(TiposSeletores.XPATH, xpathConfirmacaoObrigado);
 		Assert.assertEquals("Obrigado!".toUpperCase(), confirmacaoObrigado.getText().toString().toUpperCase());
+	}
+	
+	public static void acessarNewsletter() {
+		aguardarPresencaElemeto(TiposSeletores.XPATH, xpathMenuOpcaoContato, 3000);
+		menuOpcaoContato= encontrarElemento(TiposSeletores.XPATH, xpathMenuOpcaoContato);
+		aguardarElemetoClicavel(menuOpcaoContato, 3000);
+		clicarElemento(menuOpcaoContato);
+		
+		aguardarUrl(url+"contato", 3000);
+		
+		aguardarPresencaElemeto(TiposSeletores.XPATH, xpathNewsletterCmpNome, 3000);
+		newsletterCmpNome= encontrarElemento(TiposSeletores.XPATH, xpathNewsletterCmpNome);
+		Actions actions= new Actions(driver);
+		actions.moveToElement(newsletterCmpNome).build().perform();
+		actions.scrollToElement(newsletterCmpNome).build().perform();
 	}
 }
